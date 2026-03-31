@@ -1,7 +1,19 @@
-let perlinScale = 50;
+let perlinScale = 200;
+let tile_size = 5;
+
+let grassImage; 
+let sandImage;
+let waterImage;
+
+function preload() {
+  //carica risorse
+  grassImage = loadImage('tiles/grass.png');
+  sandImage = loadImage('tiles/sand.png');
+  waterImage = loadImage('tiles/water.png');  
+}
 
 function setup() {
-  createCanvas(200, 200);
+  createCanvas(windowWidth, windowHeight);
 
   background(0);
   noStroke();
@@ -9,8 +21,8 @@ function setup() {
   let centralx = width / 2;
   let centraly = height / 2;
 
-  for (let x = 0; x < width; x++) {
-    for (let y = 0; y < height; y++) {
+  for (let x = 0; x < width; x = x + tile_size) {
+    for (let y = 0; y < height; y = y + tile_size) {
   
       console.log (x, y);
       
@@ -24,20 +36,21 @@ function setup() {
       noiseDetail(6);
       let perlin = noise (x / perlinScale, y / perlinScale);
       altitude*= perlin;
+      altitude+= perlin;
+      altitude-= 0.5;
 
       //assegna colore
       let seaLevel = 0.2;
       let beachLevel = 0.25;
       if (altitude < seaLevel) {
-        fill(0, 0, 255);
+        img=waterImage;
       } else if (altitude < beachLevel) { 
-        fill(255, 255, 0);     
+        img=sandImage;
       } else {
-        fill(0, 255, 0);
+        img=grassImage;
       }
 
-      rect(x, y, 1, 1);
-      
+      image(img, x, y, tile_size, tile_size);
     }
  }
 }
