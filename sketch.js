@@ -32,18 +32,7 @@ function setup() {
   
       console.log (x, y);
       
-      //distanza dal centro
-      let distanceFromCenter = dist(x, y, centralx, centraly);
-      let normdistanceFromCenter = distanceFromCenter / (width/2);
-      
-      let altitude = 1 - normdistanceFromCenter;
-
-      //noise 
-      noiseDetail(6);
-      let perlin = noise (x / perlinScale, y / perlinScale);
-      altitude*= perlin;
-      altitude+= perlin;
-      altitude-= 0.5;
+    let altitude = computeAltitude(x, y, centralx, centraly);
 
       //tiles
       let seaLevel = 0.2;
@@ -65,18 +54,7 @@ function setup() {
   
       console.log (x, y);
       
-      //distanza dal centro
-      let distanceFromCenter = dist(x, y, centralx, centraly);
-      let normdistanceFromCenter = distanceFromCenter / (width/2);
-      
-      let altitude = 1 - normdistanceFromCenter;
-
-      //noise 
-      noiseDetail(6);
-      let perlin = noise (x / perlinScale, y / perlinScale);
-      altitude*= perlin;
-      altitude+= perlin;
-      altitude-= 0.5;
+      let altitude = computeAltitude(x, y, centralx, centraly);
 
        let beachLevel = 0.25;
       //  Flowers
@@ -91,4 +69,21 @@ function setup() {
     }
  }
 }
+}
+
+function computeAltitude(x, y, centralx, centraly) {
+      //distanza dal centro
+      let distanceFromCenter = dist(x, y, centralx, centraly);
+      let normdistanceFromCenter = distanceFromCenter / (width/2);
+      
+      let altitude = 1 - normdistanceFromCenter;
+
+      //noise 
+      noiseDetail(6);
+      let perlin = noise (x / perlinScale, y / perlinScale);
+      altitude*= perlin;
+      altitude+= perlin;
+      altitude-= 0.5;
+
+      return altitude;
 }
