@@ -1,18 +1,22 @@
 let perlinScale = 200;
-let tile_size = 20;
-let sprites_size = 25;
+let tile_size = 16;
+let sprites_size = 20;
 
 let grassImage; 
 let sandImage;
 let waterImage;
 let flowerImage;
 let mushroomImage;
+let leaveImage;
+let snowImage;
 
 function preload() {
   //carica risorse
   grassImage = loadImage('assets/tiles/grass.png');
   sandImage = loadImage('assets/tiles/sand.png');
-  waterImage = loadImage('assets/tiles/water.png');
+  waterImage = loadImage('assets/tiles/water(1).png');
+  leaveImage = loadImage('assets/tiles/leaves.png');
+  snowImage = loadImage('assets/tiles/snow.png');
   
   flowerImage = loadImage('assets/sprites/flower.png');
   mushroomImage = loadImage('assets/sprites/mushroom.png');
@@ -27,6 +31,7 @@ function setup() {
   let centralx = width / 2;
   let centraly = height / 2;
 
+  //tiles
   for (let x = 0; x < width; x = x + tile_size) {
     for (let y = 0; y < height; y = y + tile_size) {
   
@@ -34,9 +39,11 @@ function setup() {
       
     let altitude = computeAltitude(x, y, centralx, centraly);
 
-      //tiles
-      let seaLevel = 0.2;
-      let beachLevel = 0.25;
+    
+      let seaLevel = 0.15;
+      let beachLevel = 0.20;
+      let leavelevel = 0.4;
+      let snowlevel = 0.45;
 
       let img;
       if (altitude < seaLevel) {
@@ -46,9 +53,16 @@ function setup() {
       } else {
         img=grassImage;
       }
-      
+      if (altitude > leavelevel) {
+        img=leaveImage;
+      }
+      if (altitude > snowlevel) {
+        img=snowImage;
+      }
+
       image(img, x, y, tile_size, tile_size);
  }
+ //sprites
   for (let x = 0; x < width; x = x + tile_size) {
     for (let y = 0; y < height; y = y + tile_size) {
   
@@ -58,12 +72,12 @@ function setup() {
 
        let beachLevel = 0.25;
       //  Flowers
-       if (random() < 0.01 && altitude > beachLevel) {
+       if (random() < 0.002 && altitude > beachLevel) {
         image(flowerImage, x, y, sprites_size, sprites_size);
       }
 
       // Mushrooms
-      if (random() < 0.008 && altitude > beachLevel) {
+      if (random() < 0.002 && altitude > beachLevel) {
         image(mushroomImage, x, y, sprites_size, sprites_size);
       }
     }
@@ -79,7 +93,7 @@ function computeAltitude(x, y, centralx, centraly) {
       let altitude = 1 - normdistanceFromCenter;
 
       //noise 
-      noiseDetail(6);
+      noiseDetail(6, 0.5);
       let perlin = noise (x / perlinScale, y / perlinScale);
       altitude*= perlin;
       altitude+= perlin;
