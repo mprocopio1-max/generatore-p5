@@ -1,3 +1,5 @@
+let perlinScale = 50;
+
 function setup() {
   createCanvas(200, 200);
 
@@ -16,9 +18,24 @@ function setup() {
       let distanceFromCenter = dist(x, y, centralx, centraly);
       let normdistanceFromCenter = distanceFromCenter / (width/2);
       
-      let atitude = 1 - normdistanceFromCenter;
+      let altitude = 1 - normdistanceFromCenter;
 
-      fill(atitude * 255);
+      //noise 
+      noiseDetail(6);
+      let perlin = noise (x / perlinScale, y / perlinScale);
+      altitude*= perlin;
+
+      //assegna colore
+      let seaLevel = 0.2;
+      let beachLevel = 0.25;
+      if (altitude < seaLevel) {
+        fill(0, 0, 255);
+      } else if (altitude < beachLevel) { 
+        fill(255, 255, 0);     
+      } else {
+        fill(0, 255, 0);
+      }
+
       rect(x, y, 1, 1);
       
     }
