@@ -128,7 +128,7 @@ function drawStaticIsland() {
       let snowLevel = 0.62;
 
       if (altitude < seaLevel) {
-        if (waterPatchNoise > 0.62) {
+        if (waterPatchNoise > 0.55) {
           islandLayer.image(deepWaterImage, x, y, tile_size, tile_size);
         } else {
           islandLayer.image(shallowWaterImage, x, y, tile_size, tile_size);
