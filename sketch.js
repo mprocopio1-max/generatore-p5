@@ -1,4 +1,4 @@
-let perlinScale = 150;
+let perlinScale = 100;
 let tile_size = 10;
 
 // tiles
@@ -19,6 +19,7 @@ let chestImage;
 let slimeSheet;
 let skeletonSheet;
 let playerSheet;
+let chickenSheet;
 
 // layer statici / dinamici
 let islandLayer;
@@ -55,6 +56,15 @@ const playerData = {
   rows: 5
 };
 
+// Chicken.png = 2 colonne x 2 righe
+const chickenData = {
+  img: null,
+  frameW: 30,
+  frameH: 30,
+  cols: 2,
+  rows: 2
+};
+
 function preload() {
   grassImage = loadImage('assets/Cute_Fantasy_Free/Tiles/Grass_Middle.png');
   sandImage = loadImage('assets/Cute_Fantasy_Free/Tiles/Path_Middle.png');
@@ -71,6 +81,7 @@ function preload() {
   slimeSheet = loadImage('assets/Cute_Fantasy_Free/Enemies/Slime_Green.png');
   skeletonSheet = loadImage('assets/Cute_Fantasy_Free/Enemies/Skeleton.png');
   playerSheet = loadImage('assets/Cute_Fantasy_Free/Player/Player.png');
+  chickenSheet = loadImage('assets/Cute_Fantasy_Free/Animals/Chicken/Chicken.png');
 }
 
 function setup() {
@@ -80,6 +91,7 @@ function setup() {
   slimeData.img = slimeSheet;
   skeletonData.img = skeletonSheet;
   playerData.img = playerSheet;
+  chickenData.img = chickenSheet;
 
   islandLayer = createGraphics(width, height);
   cloudsLayer = createGraphics(width, height);
@@ -128,7 +140,7 @@ function drawStaticIsland() {
       let snowLevel = 0.62;
 
       if (altitude < seaLevel) {
-        if (waterPatchNoise > 0.55) {
+        if (waterPatchNoise > 0.62) {
           islandLayer.image(deepWaterImage, x, y, tile_size, tile_size);
         } else {
           islandLayer.image(shallowWaterImage, x, y, tile_size, tile_size);
@@ -295,6 +307,7 @@ function createAnimatedSprites() {
   createGroup(10, slimeData, 42, 0.25, 0.60, 0, 8);      // slimes
   createGroup(7, skeletonData, 48, 0.28, 0.62, 0, 3);    // skeleton
   createGroup(5, playerData, 50, 0.24, 0.58, 0, 3);      // npc/player
+  createGroup(16, chickenData, 26, 0.22, 0.56, 0, 2);    // chickens
 }
 
 function createGroup(count, sheetData, size, minAlt, maxAlt, row, frames) {
@@ -439,8 +452,7 @@ class WalkerSprite {
 // ALTEZZA
 // ======================================================
 function computeAltitude(x, y, centralx, centraly) {
-  let waterBorder = min(width, height) * 0.14;
-  let islandRadius = max(40, min(width, height) / 2 - waterBorder);
+  let islandRadius = min(width, height) * 0.38;
 
   let distanceFromCenter = dist(x, y, centralx, centraly);
   let normdistanceFromCenter = distanceFromCenter / islandRadius;
