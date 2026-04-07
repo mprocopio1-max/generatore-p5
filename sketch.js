@@ -1,4 +1,4 @@
-let perlinScale = 100;
+let perlinScale = 200;
 let tile_size = 10;
 
 // tiles
@@ -125,6 +125,7 @@ function drawStaticIsland() {
   let centralx = width / 2;
   let centraly = height / 2;
 
+  
   // 1) tiles
   for (let x = 0; x < width; x += tile_size) {
     for (let y = 0; y < height; y += tile_size) {
@@ -452,7 +453,7 @@ class WalkerSprite {
 // ALTEZZA
 // ======================================================
 function computeAltitude(x, y, centralx, centraly) {
-  let islandRadius = min(width, height) * 0.38;
+  let islandRadius = min(width, height) * 0.50;
 
   let distanceFromCenter = dist(x, y, centralx, centraly);
   let normdistanceFromCenter = distanceFromCenter / islandRadius;
@@ -464,7 +465,7 @@ function computeAltitude(x, y, centralx, centraly) {
 
   altitude *= perlin;
   altitude += perlin;
-  altitude -= 0.1;
+  altitude -= 0.3;
 
   return altitude;
 }
