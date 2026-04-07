@@ -1,4 +1,4 @@
-let perlinScale = 200;
+let perlinScale = 150;
 let tile_size = 10;
 
 // tiles
