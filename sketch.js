@@ -173,7 +173,7 @@ function drawStaticDecorations() {
       image(houseImage, -42, -68, 84, 112);
       pop();
     } else if (obj.type === "tree") {
-      sway *= 2.28;
+      sway *= 1.5;
       push();
       translate(obj.x, obj.y);
       rotate(sway);
@@ -229,13 +229,13 @@ function placeStaticDecorations() {
   tries = 0;
 
   // CHEST
-  while (chestsPlaced < 16 && tries < 1500) {
+  while (chestsPlaced < 16 && tries < 15000) {
     let x = random(20, width - 20);
     let y = random(20, height - 20);
 
     let altitude = computeAltitude(x, y, width / 2, height / 2);
 
-    if (altitude > 0.28 && altitude < 0.50 && isFarFromOthers(x, y, 24, "chest")) {
+    if (altitude > 0.28 && altitude < 0.7 && isFarFromOthers(x, y, 24, "chest")) {
       registerStaticObject(x, y, "chest");
       chestsPlaced++;
     }
